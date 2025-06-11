@@ -321,7 +321,7 @@ func TestKeyboardInput_ContextCancellation(t *testing.T) {
 	keyboardInput := NewKeyboardInput()
 
 	if keyboardInput.ctx.Err() != nil {
-		t.Error("Context should not be cancelled initially")
+		t.Error("Context should not be canceled initially")
 	}
 
 	keyboardInput.Stop()
@@ -329,7 +329,7 @@ func TestKeyboardInput_ContextCancellation(t *testing.T) {
 	select {
 	case <-keyboardInput.ctx.Done():
 	default:
-		t.Error("Context should be cancelled after Stop()")
+		t.Error("Context should be canceled after Stop()")
 	}
 }
 
