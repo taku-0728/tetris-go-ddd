@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"math/rand"
 	"tetris/application"
 	"tetris/infrastructure/console"
 	"tetris/infrastructure/input"
@@ -18,8 +17,6 @@ func main() {
 }
 
 func runGame() error {
-	rand.Seed(time.Now().UnixNano())
-
 	gameController, err := application.NewGameController()
 	if err != nil {
 		return fmt.Errorf("ゲームコントローラー初期化エラー: %w", err)
@@ -28,14 +25,14 @@ func runGame() error {
 	display := console.NewDisplay()
 	keyboardInput := input.NewKeyboardInput()
 
-	if err := keyboardInput.Start(); err != nil {
-		return fmt.Errorf("キーボード入力初期化エラー: %w", err)
+	if startErr := keyboardInput.Start(); startErr != nil {
+		return fmt.Errorf("キーボード入力初期化エラー: %w", startErr)
 	}
 	defer keyboardInput.Stop()
 
 	fmt.Println("テトリスゲームを開始します！")
 	fmt.Println("何かキーを押してゲームを開始してください...")
-	
+
 	_, err = keyboardInput.GetInput()
 	if err != nil && !errors.Is(err, input.ErrInputCancelled) {
 		return fmt.Errorf("入力待機エラー: %w", err)

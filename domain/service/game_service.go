@@ -3,14 +3,14 @@ package service
 import (
 	"errors"
 	"fmt"
-	"math/rand"
+	"math/rand/v2"
 	"tetris/domain/model"
 )
 
 var (
-	ErrGameOver     = errors.New("ゲームが終了しています")
-	ErrInvalidMove  = errors.New("無効な移動です")
-	ErrNoPiece      = errors.New("アクティブなピースがありません")
+	ErrGameOver    = errors.New("ゲームが終了しています")
+	ErrInvalidMove = errors.New("無効な移動です")
+	ErrNoPiece     = errors.New("アクティブなピースがありません")
 )
 
 type GameService struct {
@@ -192,7 +192,7 @@ func (g *GameService) lockPiece() error {
 }
 
 func (g *GameService) spawnNewPiece() error {
-	tetrominoType := model.TetrominoType(rand.Intn(7))
+	tetrominoType := model.TetrominoType(rand.IntN(7))
 	position := model.Point{X: model.BoardWidth/2 - 2, Y: 0}
 
 	piece, err := model.NewTetromino(tetrominoType, position)
@@ -205,7 +205,7 @@ func (g *GameService) spawnNewPiece() error {
 }
 
 func (g *GameService) generateNextPiece() error {
-	tetrominoType := model.TetrominoType(rand.Intn(7))
+	tetrominoType := model.TetrominoType(rand.IntN(7))
 	position := model.Point{X: model.BoardWidth/2 - 2, Y: 0}
 
 	piece, err := model.NewTetromino(tetrominoType, position)
