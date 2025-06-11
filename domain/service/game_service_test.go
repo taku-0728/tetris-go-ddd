@@ -143,10 +143,10 @@ func TestGameService_MovePiece(t *testing.T) {
 
 func TestGameService_RotatePiece(t *testing.T) {
 	tests := []struct {
-		name         string
-		setupGame    func(*GameService)
-		expectError  bool
-		errorType    error
+		name        string
+		setupGame   func(*GameService)
+		expectError bool
+		errorType   error
 	}{
 		{
 			name:        "正常な回転",
@@ -199,7 +199,7 @@ func TestGameService_RotatePiece(t *testing.T) {
 	}
 }
 
-func TestGameService_DropPiece(t *testing.T) {
+func testGameServiceWithGameOverScenario(t *testing.T, methodName string, testFunc func(*GameService) error) {
 	tests := []struct {
 		name        string
 		setupGame   func(*GameService)
@@ -207,12 +207,12 @@ func TestGameService_DropPiece(t *testing.T) {
 		errorType   error
 	}{
 		{
-			name:        "正常なドロップ",
+			name:        "正常な" + methodName,
 			setupGame:   func(g *GameService) {},
 			expectError: false,
 		},
 		{
-			name: "ゲームオーバー時のドロップ",
+			name: "ゲームオーバー時の" + methodName,
 			setupGame: func(g *GameService) {
 				g.gameOver = true
 			},
@@ -230,78 +230,36 @@ func TestGameService_DropPiece(t *testing.T) {
 
 			tt.setupGame(gameService)
 
-			err = gameService.DropPiece()
+			err = testFunc(gameService)
 
 			if tt.expectError {
 				if err == nil {
-					t.Errorf("GameService.DropPiece() error = nil, wantErr %v", tt.errorType)
+					t.Errorf("GameService.%s() error = nil, wantErr %v", methodName, tt.errorType)
 					return
 				}
 				if !errors.Is(err, tt.errorType) {
-					t.Errorf("GameService.DropPiece() error = %v, wantErr %v", err, tt.errorType)
+					t.Errorf("GameService.%s() error = %v, wantErr %v", methodName, err, tt.errorType)
 				}
 				return
 			}
 
 			if err != nil {
-				t.Errorf("GameService.DropPiece() unexpected error = %v", err)
+				t.Errorf("GameService.%s() unexpected error = %v", methodName, err)
 			}
-
-			// ドロップ後はピースがロックされて新しいピースが生成されるため、
-			// 単純な位置の比較ではなく、ドロップが正常に実行されたかをチェック
 		})
 	}
 }
 
+func TestGameService_DropPiece(t *testing.T) {
+	testGameServiceWithGameOverScenario(t, "DropPiece", func(g *GameService) error {
+		return g.DropPiece()
+	})
+}
+
 func TestGameService_Update(t *testing.T) {
-	tests := []struct {
-		name        string
-		setupGame   func(*GameService)
-		expectError bool
-		errorType   error
-	}{
-		{
-			name:        "正常な更新",
-			setupGame:   func(g *GameService) {},
-			expectError: false,
-		},
-		{
-			name: "ゲームオーバー時の更新",
-			setupGame: func(g *GameService) {
-				g.gameOver = true
-			},
-			expectError: true,
-			errorType:   ErrGameOver,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gameService, err := NewGameService()
-			if err != nil {
-				t.Fatalf("NewGameService() error = %v", err)
-			}
-
-			tt.setupGame(gameService)
-
-			err = gameService.Update()
-
-			if tt.expectError {
-				if err == nil {
-					t.Errorf("GameService.Update() error = nil, wantErr %v", tt.errorType)
-					return
-				}
-				if !errors.Is(err, tt.errorType) {
-					t.Errorf("GameService.Update() error = %v, wantErr %v", err, tt.errorType)
-				}
-				return
-			}
-
-			if err != nil {
-				t.Errorf("GameService.Update() unexpected error = %v", err)
-			}
-		})
-	}
+	testGameServiceWithGameOverScenario(t, "Update", func(g *GameService) error {
+		return g.Update()
+	})
 }
 
 func TestGameService_InitialState(t *testing.T) {
@@ -311,9 +269,9 @@ func TestGameService_InitialState(t *testing.T) {
 	}
 
 	tests := []struct {
-		name     string
-		check    func() bool
-		message  string
+		name    string
+		check   func() bool
+		message string
 	}{
 		{
 			name:    "初期スコアが0",
