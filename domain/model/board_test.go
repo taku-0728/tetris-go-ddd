@@ -365,12 +365,12 @@ func TestBoard_GetCompletedLines(t *testing.T) {
 
 func TestBoard_ClearLines(t *testing.T) {
 	tests := []struct {
-		name        string
-		setupBoard  func(*Board)
+		name         string
+		setupBoard   func(*Board)
 		linesToClear []int
-		expectError bool
-		errorType   error
-		checkResult func(*Board) bool
+		expectError  bool
+		errorType    error
+		checkResult  func(*Board) bool
 	}{
 		{
 			name: "1つのライン消去",
@@ -388,15 +388,15 @@ func TestBoard_ClearLines(t *testing.T) {
 			},
 		},
 		{
-			name: "範囲外のライン消去",
-			setupBoard: func(b *Board) {},
+			name:         "範囲外のライン消去",
+			setupBoard:   func(b *Board) {},
 			linesToClear: []int{25},
 			expectError:  true,
 			errorType:    ErrOutOfBounds,
 		},
 		{
-			name: "空のライン配列",
-			setupBoard: func(b *Board) {},
+			name:         "空のライン配列",
+			setupBoard:   func(b *Board) {},
 			linesToClear: []int{},
 			expectError:  false,
 		},

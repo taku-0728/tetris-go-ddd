@@ -7,43 +7,43 @@ import (
 
 func TestNewTetromino(t *testing.T) {
 	tests := []struct {
-		name         string
+		name          string
 		tetrominoType TetrominoType
-		position     Point
-		expectError  bool
-		errorType    error
+		position      Point
+		expectError   bool
+		errorType     error
 	}{
 		{
-			name:         "正常なIピース作成",
+			name:          "正常なIピース作成",
 			tetrominoType: I,
-			position:     Point{X: 5, Y: 0},
-			expectError:  false,
+			position:      Point{X: 5, Y: 0},
+			expectError:   false,
 		},
 		{
-			name:         "正常なOピース作成",
+			name:          "正常なOピース作成",
 			tetrominoType: O,
-			position:     Point{X: 3, Y: 2},
-			expectError:  false,
+			position:      Point{X: 3, Y: 2},
+			expectError:   false,
 		},
 		{
-			name:         "正常なTピース作成",
+			name:          "正常なTピース作成",
 			tetrominoType: T,
-			position:     Point{X: 0, Y: 0},
-			expectError:  false,
+			position:      Point{X: 0, Y: 0},
+			expectError:   false,
 		},
 		{
-			name:         "無効なテトロミノタイプ（負の値）",
+			name:          "無効なテトロミノタイプ（負の値）",
 			tetrominoType: TetrominoType(-1),
-			position:     Point{X: 0, Y: 0},
-			expectError:  true,
-			errorType:    ErrInvalidTetrominoType,
+			position:      Point{X: 0, Y: 0},
+			expectError:   true,
+			errorType:     ErrInvalidTetrominoType,
 		},
 		{
-			name:         "無効なテトロミノタイプ（範囲外の値）",
+			name:          "無効なテトロミノタイプ（範囲外の値）",
 			tetrominoType: TetrominoType(10),
-			position:     Point{X: 0, Y: 0},
-			expectError:  true,
-			errorType:    ErrInvalidTetrominoType,
+			position:      Point{X: 0, Y: 0},
+			expectError:   true,
+			errorType:     ErrInvalidTetrominoType,
 		},
 	}
 
@@ -87,31 +87,31 @@ func TestTetromino_Move(t *testing.T) {
 	tests := []struct {
 		name             string
 		initialPosition  Point
-		delta           Point
+		delta            Point
 		expectedPosition Point
 	}{
 		{
 			name:             "右に移動",
 			initialPosition:  Point{X: 5, Y: 10},
-			delta:           Point{X: 1, Y: 0},
+			delta:            Point{X: 1, Y: 0},
 			expectedPosition: Point{X: 6, Y: 10},
 		},
 		{
 			name:             "左に移動",
 			initialPosition:  Point{X: 5, Y: 10},
-			delta:           Point{X: -1, Y: 0},
+			delta:            Point{X: -1, Y: 0},
 			expectedPosition: Point{X: 4, Y: 10},
 		},
 		{
 			name:             "下に移動",
 			initialPosition:  Point{X: 5, Y: 10},
-			delta:           Point{X: 0, Y: 1},
+			delta:            Point{X: 0, Y: 1},
 			expectedPosition: Point{X: 5, Y: 11},
 		},
 		{
 			name:             "斜め移動",
 			initialPosition:  Point{X: 3, Y: 7},
-			delta:           Point{X: 2, Y: -3},
+			delta:            Point{X: 2, Y: -3},
 			expectedPosition: Point{X: 5, Y: 4},
 		},
 	}
@@ -137,39 +137,39 @@ func TestTetromino_Move(t *testing.T) {
 
 func TestTetromino_GetBlocks(t *testing.T) {
 	tests := []struct {
-		name         string
+		name          string
 		tetrominoType TetrominoType
-		position     Point
-		minBlocks    int
-		maxBlocks    int
+		position      Point
+		minBlocks     int
+		maxBlocks     int
 	}{
 		{
-			name:         "Iピースのブロック数",
+			name:          "Iピースのブロック数",
 			tetrominoType: I,
-			position:     Point{X: 0, Y: 0},
-			minBlocks:    4,
-			maxBlocks:    4,
+			position:      Point{X: 0, Y: 0},
+			minBlocks:     4,
+			maxBlocks:     4,
 		},
 		{
-			name:         "Oピースのブロック数",
+			name:          "Oピースのブロック数",
 			tetrominoType: O,
-			position:     Point{X: 0, Y: 0},
-			minBlocks:    4,
-			maxBlocks:    4,
+			position:      Point{X: 0, Y: 0},
+			minBlocks:     4,
+			maxBlocks:     4,
 		},
 		{
-			name:         "Tピースのブロック数",
+			name:          "Tピースのブロック数",
 			tetrominoType: T,
-			position:     Point{X: 0, Y: 0},
-			minBlocks:    4,
-			maxBlocks:    4,
+			position:      Point{X: 0, Y: 0},
+			minBlocks:     4,
+			maxBlocks:     4,
 		},
 		{
-			name:         "位置オフセットありのブロック",
+			name:          "位置オフセットありのブロック",
 			tetrominoType: I,
-			position:     Point{X: 5, Y: 10},
-			minBlocks:    4,
-			maxBlocks:    4,
+			position:      Point{X: 5, Y: 10},
+			minBlocks:     4,
+			maxBlocks:     4,
 		},
 	}
 
@@ -181,7 +181,7 @@ func TestTetromino_GetBlocks(t *testing.T) {
 			}
 
 			blocks := tetromino.GetBlocks()
-			
+
 			if len(blocks) < tt.minBlocks || len(blocks) > tt.maxBlocks {
 				t.Errorf("Tetromino.GetBlocks() blocks count = %d, want between %d and %d", len(blocks), tt.minBlocks, tt.maxBlocks)
 			}
@@ -197,29 +197,29 @@ func TestTetromino_GetBlocks(t *testing.T) {
 
 func TestTetromino_Rotate(t *testing.T) {
 	tests := []struct {
-		name         string
+		name          string
 		tetrominoType TetrominoType
-		position     Point
-		expectError  bool
-		errorType    error
+		position      Point
+		expectError   bool
+		errorType     error
 	}{
 		{
-			name:         "Iピースの回転",
+			name:          "Iピースの回転",
 			tetrominoType: I,
-			position:     Point{X: 5, Y: 5},
-			expectError:  false,
+			position:      Point{X: 5, Y: 5},
+			expectError:   false,
 		},
 		{
-			name:         "Tピースの回転",
+			name:          "Tピースの回転",
 			tetrominoType: T,
-			position:     Point{X: 3, Y: 3},
-			expectError:  false,
+			position:      Point{X: 3, Y: 3},
+			expectError:   false,
 		},
 		{
-			name:         "Oピースの回転（変化なし）",
+			name:          "Oピースの回転（変化なし）",
 			tetrominoType: O,
-			position:     Point{X: 2, Y: 2},
-			expectError:  false,
+			position:      Point{X: 2, Y: 2},
+			expectError:   false,
 		},
 	}
 
@@ -231,9 +231,9 @@ func TestTetromino_Rotate(t *testing.T) {
 			}
 
 			originalBlocks := tetromino.GetBlocks()
-			
+
 			err = tetromino.Rotate()
-			
+
 			if tt.expectError {
 				if err == nil {
 					t.Errorf("Tetromino.Rotate() error = nil, wantErr %v", tt.errorType)
@@ -251,7 +251,7 @@ func TestTetromino_Rotate(t *testing.T) {
 			}
 
 			newBlocks := tetromino.GetBlocks()
-			
+
 			if len(newBlocks) != len(originalBlocks) {
 				t.Errorf("Tetromino.Rotate() block count changed from %d to %d", len(originalBlocks), len(newBlocks))
 			}

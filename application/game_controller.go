@@ -9,20 +9,20 @@ import (
 )
 
 type GameState struct {
-	Board         *model.Board
-	CurrentPiece  *model.Tetromino
-	NextPiece     *model.Tetromino
-	Score         int
-	Lines         int
-	Level         int
-	GameOver      bool
+	Board        *model.Board
+	CurrentPiece *model.Tetromino
+	NextPiece    *model.Tetromino
+	Score        int
+	Lines        int
+	Level        int
+	GameOver     bool
 }
 
 type GameController struct {
-	gameService   *service.GameService
-	dropTimer     time.Time
-	dropInterval  time.Duration
-	isPaused      bool
+	gameService  *service.GameService
+	dropTimer    time.Time
+	dropInterval time.Duration
+	isPaused     bool
 }
 
 func NewGameController() (*GameController, error) {
@@ -150,7 +150,7 @@ func (gc *GameController) updateDropInterval() {
 	level := gc.gameService.GetLevel()
 	baseInterval := 1000 * time.Millisecond
 	reduction := time.Duration(level-1) * 100 * time.Millisecond
-	
+
 	gc.dropInterval = baseInterval - reduction
 	if gc.dropInterval < 100*time.Millisecond {
 		gc.dropInterval = 100 * time.Millisecond

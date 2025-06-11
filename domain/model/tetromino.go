@@ -211,7 +211,7 @@ func (t *Tetromino) Rotate() error {
 	if !exists {
 		return fmt.Errorf("%w: テトロミノタイプが無効です", ErrRotationFailed)
 	}
-	
+
 	if len(shapes) <= 1 {
 		return nil
 	}

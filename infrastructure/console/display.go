@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	EmptyBlock = "  "
+	EmptyBlock  = "  "
 	FilledBlock = "██"
-	WallBlock = "│"
-	FloorBlock = "─"
+	WallBlock   = "│"
+	FloorBlock  = "─"
 	CornerBlock = "└"
 )
 
@@ -73,7 +73,7 @@ func (d *Display) printGameInfo(gameState application.GameState) {
 func (d *Display) printBoard(gameState application.GameState) {
 	board := gameState.Board
 	currentPiece := gameState.CurrentPiece
-	
+
 	gameBoard := make([][]bool, d.height)
 	for i := range gameBoard {
 		gameBoard[i] = make([]bool, d.width)
@@ -129,10 +129,10 @@ func centerText(text string, width int) string {
 	if len(text) >= width {
 		return text[:width]
 	}
-	
+
 	padding := width - len(text)
 	leftPadding := padding / 2
 	rightPadding := padding - leftPadding
-	
+
 	return strings.Repeat(" ", leftPadding) + text + strings.Repeat(" ", rightPadding)
 }

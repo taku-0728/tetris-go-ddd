@@ -63,9 +63,9 @@ func TestGameController_GetGameState(t *testing.T) {
 	gameState := controller.GetGameState()
 
 	tests := []struct {
-		name     string
-		check    func() bool
-		message  string
+		name    string
+		check   func() bool
+		message string
 	}{
 		{
 			name:    "ボードが存在する",
@@ -277,14 +277,14 @@ func TestGameController_PauseToggle(t *testing.T) {
 
 func TestGameController_Update(t *testing.T) {
 	tests := []struct {
-		name        string
+		name            string
 		setupController func(*GameController)
-		expectError bool
+		expectError     bool
 	}{
 		{
-			name:        "通常の更新",
+			name:            "通常の更新",
 			setupController: func(gc *GameController) {},
-			expectError: false,
+			expectError:     false,
 		},
 		{
 			name: "一時停止中の更新",
@@ -386,28 +386,28 @@ func TestGameController_MovePieceOperations(t *testing.T) {
 	initialPosition := controller.GetGameState().CurrentPiece.Position
 
 	tests := []struct {
-		name     string
+		name      string
 		operation func() error
-		deltaX   int
-		deltaY   int
+		deltaX    int
+		deltaY    int
 	}{
 		{
-			name:     "左移動",
+			name:      "左移動",
 			operation: controller.movePieceLeft,
-			deltaX:   -1,
-			deltaY:   0,
+			deltaX:    -1,
+			deltaY:    0,
 		},
 		{
-			name:     "右移動",
+			name:      "右移動",
 			operation: controller.movePieceRight,
-			deltaX:   1,
-			deltaY:   0,
+			deltaX:    1,
+			deltaY:    0,
 		},
 		{
-			name:     "下移動",
+			name:      "下移動",
 			operation: controller.movePieceDown,
-			deltaX:   0,
-			deltaY:   1,
+			deltaX:    0,
+			deltaY:    1,
 		},
 	}
 
@@ -439,12 +439,12 @@ func TestGameController_DropIntervalUpdate(t *testing.T) {
 	}
 
 	tests := []struct {
-		name            string
+		name                string
 		expectedMaxInterval time.Duration
 		expectedMinInterval time.Duration
 	}{
 		{
-			name:            "ドロップインターバル更新",
+			name:                "ドロップインターバル更新",
 			expectedMaxInterval: time.Second,
 			expectedMinInterval: 100 * time.Millisecond,
 		},

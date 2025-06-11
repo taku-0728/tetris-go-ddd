@@ -11,9 +11,9 @@ const (
 )
 
 var (
-	ErrOutOfBounds     = errors.New("ボード範囲外です")
+	ErrOutOfBounds      = errors.New("ボード範囲外です")
 	ErrInvalidBoardSize = errors.New("無効なボードサイズです")
-	ErrBlockOccupied   = errors.New("ブロックが既に配置されています")
+	ErrBlockOccupied    = errors.New("ブロックが既に配置されています")
 )
 
 type Board struct {
